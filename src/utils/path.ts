@@ -1,6 +1,6 @@
 export const pathMap = {
 	base: getPath("/"),
-	notFound: getPath("/404"),
+	boxShadow: getPath("/box-shadow"),
 };
 
 export const checkPath =
