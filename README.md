@@ -55,6 +55,10 @@ This section will be updated as the project progresses. Stay tuned!
 Contributions are welcome! If you have ideas or suggestions, feel free to open
 an issue or submit a pull request.
 
+## License 📜
+
+This project is licensed under the [MIT License](LICENSE).
+
 ---
 
 Stay tuned for updates and upcoming features! 🌈
