@@ -1,5 +1,5 @@
-import preactLogo from '../../assets/preact.svg';
-import './style.css';
+import preactLogo from "../../assets/preact.svg";
+import "./style.css";
 
 export function Home() {
 	return (
