@@ -1,17 +1,24 @@
-import { LocationProvider, Router, Route, hydrate, prerender as ssr } from 'preact-iso';
+import {
+	LocationProvider,
+	Route,
+	Router,
+	hydrate,
+	prerender as ssr,
+} from "preact-iso";
 
-import { Header } from './components/Header.jsx';
-import { Home } from './pages/Home/index.jsx';
-import { NotFound } from './pages/_404.jsx';
-import './style.css';
+import { Header } from "./components/Header.jsx";
+import { Home } from "./pages/Home/index.jsx";
+import { NotFound } from "./pages/_404.jsx";
+import "./style.css";
+import { pathMap } from "./utils/path.js";
 
 export function App() {
 	return (
-		<LocationProvider>
+		<LocationProvider scope={pathMap.base}>
 			<Header />
 			<main>
 				<Router>
-					<Route path="/" component={Home} />
+					<Route path={pathMap.base} component={Home} />
 					<Route default component={NotFound} />
 				</Router>
 			</main>
@@ -19,10 +26,10 @@ export function App() {
 	);
 }
 
-if (typeof window !== 'undefined') {
-	hydrate(<App />, document.getElementById('app'));
+if (typeof window !== "undefined") {
+	hydrate(<App />, document.getElementById("app"));
 }
 
-export async function prerender(data) {
+export async function prerender(data: object) {
 	return await ssr(<App {...data} />);
 }

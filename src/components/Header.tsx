@@ -1,4 +1,6 @@
-import { useLocation } from 'preact-iso';
+import { useLocation } from "preact-iso";
+
+import { pathMap } from "../utils/path.js";
 
 export function Header() {
 	const { url } = useLocation();
@@ -6,10 +8,10 @@ export function Header() {
 	return (
 		<header>
 			<nav>
-				<a href="/" class={url == '/' && 'active'}>
+				<a href={pathMap.base} class={url == pathMap.base && "active"}>
 					Home
 				</a>
-				<a href="/404" class={url == '/404' && 'active'}>
+				<a href={pathMap.notFound} class={url == pathMap.notFound && "active"}>
 					404
 				</a>
 			</nav>
