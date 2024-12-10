@@ -1,0 +1,23 @@
+name: Continuous Integration
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_test:
+    name: Lint and Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout respository
+        uses: actions/checkout@v4
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install bun dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Check build
+        run: bun run build
