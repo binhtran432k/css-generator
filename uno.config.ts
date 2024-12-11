@@ -15,5 +15,5 @@ export default defineConfig({
 			},
 		},
 	},
-	presets: [presetUno(), presetIcons({ cdn: "https://esm.sh/" })],
+	presets: [presetUno(), presetIcons()],
 });
