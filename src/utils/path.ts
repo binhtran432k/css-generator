@@ -1,6 +1,6 @@
 export const pathMap = {
 	base: "",
-	boxShadow: "box-shadow",
+	boxShadow: "box-shadow/",
 };
 
 export const getRoutePath =
