@@ -29,6 +29,7 @@ export function App() {
 		} else {
 			document.documentElement.classList.add("light");
 		}
+		Coloris({ themeMode: isDark ? "dark" : "light" });
 	}, [isDark]);
 
 	return (
