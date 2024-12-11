@@ -6,7 +6,7 @@ export const pathMap = {
 export const getRoutePath =
 	typeof window !== "undefined"
 		? (path: string) => import.meta.env.BASE_URL + path
-		: (path: string) => "/" + path;
+		: (path: string) => "/" + path.replace(/\/$/, "");
 
 export const checkPath = (path: string, pathFromMap: string) =>
 	path === getRoutePath(pathFromMap);

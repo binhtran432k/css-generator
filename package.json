@@ -18,6 +18,8 @@
 		"teaful": "^0.11.1"
 	},
 	"devDependencies": {
+		"@iconify-json/material-symbols": "^1.2.10",
+		"@iconify-json/simple-icons": "^1.2.15",
 		"@preact/preset-vite": "^2.9.0",
 		"@unocss/reset": "^0.65.1",
 		"eslint": "^8.57.1",
