@@ -10,7 +10,7 @@ export function Card(
 	}>,
 ) {
 	return (
-		<section class={clsx(props.name, "bg-bg-alt light:bg-light-bg-alt shadow-sm")}>
+		<section class={clsx(props.name, "bg-bg-alt light:bg-light-bg-alt shadow-sm rounded")}>
 			<div>
 				<div class="flex justify-between items-center p-4">
 					<h3 class="font-bold">{props.label}</h3>
