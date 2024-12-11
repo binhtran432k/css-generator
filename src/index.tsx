@@ -13,7 +13,7 @@ import { Home } from "./pages/Home.jsx";
 import { NotFound } from "./pages/_404.jsx";
 import { useDark } from "./hooks/useDark.js";
 
-import { pathMap } from "./utils/path.js";
+import { getRoutePath, pathMap } from "./utils/path.js";
 
 import "@unocss/reset/tailwind-compat.css";
 import "virtual:uno.css";
@@ -36,8 +36,8 @@ export function App() {
 			<Header />
 			<main>
 				<Router>
-					<Route path={pathMap.base} component={Home} />
-					<Route path={pathMap.boxShadow} component={BoxShadow} />
+					<Route path={getRoutePath(pathMap.base)} component={Home} />
+					<Route path={getRoutePath(pathMap.boxShadow)} component={BoxShadow} />
 					<Route default component={NotFound} />
 				</Router>
 			</main>

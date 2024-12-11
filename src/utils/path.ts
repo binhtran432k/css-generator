@@ -1,15 +1,12 @@
 export const pathMap = {
-	base: getPath("/"),
-	boxShadow: getPath("/box-shadow"),
+	base: "",
+	boxShadow: "box-shadow",
 };
 
-export const checkPath =
+export const getRoutePath =
 	typeof window !== "undefined"
-		? (path: string, pathFromMap: string) => path === pathFromMap
-		: (path: string, pathFromMap: string) => getPath(path) === pathFromMap;
+		? (path: string) => import.meta.env.BASE_URL + path
+		: (path: string) => "/" + path;
 
-function getPath(path: string) {
-	return import.meta.env
-		? import.meta.env.BASE_URL + path.replace(/^\//, "")
-		: path;
-}
+export const checkPath = (path: string, pathFromMap: string) =>
+	path === getRoutePath(pathFromMap);

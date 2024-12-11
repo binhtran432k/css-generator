@@ -48,7 +48,10 @@ function ExternalIconLink(props: {
 	return (
 		<a
 			href={props.href}
-			class={clsx(props.icon, "hover:color-primary hover:light:color-light-primary")}
+			class={clsx(
+				props.icon,
+				"hover:color-primary hover:light:color-light-primary",
+			)}
 			aria-label={props.label}
 			target="_blank"
 		/>
