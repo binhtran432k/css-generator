@@ -37,24 +37,26 @@ function ColorInput(props: {
 }) {
 	const id = "preview-color-input-" + useId();
 	return (
-		<div class="relative">
+		<div class="relative overflow-hidden">
 			<label
 				for={id}
-				class="p-1 h-8 w-12 cursor-pointer block border rounded overflow-hidden border-fg/40 light:border-light-fg/20"
+				class="p-1 h-8 w-12 cursor-pointer block border rounded border-fg/40 light:border-light-fg/20"
 			>
 				<div class="w-full h-full" style={{ backgroundColor: props.color }} />
 			</label>
-			<input
-				type="text"
-				id={id}
-				class="absolute -pos-left-[9rem] pos-top-full w-full h-0 bg-bg-alt light:bg-light-bg-alt"
-				value={props.color}
-				onChange={(e) =>
-					props.setColor((e.target as unknown as { value: string }).value)
-				}
-				title={`Choose ${props.name} color`}
-				data-coloris
-			/>
+			<div class="absolute -pos-left-[9.5rem] pos-top-1/2 w-full h-full opacity-0">
+				<input
+					type="text"
+					id={id}
+					value={props.color}
+					class="w-full h-full"
+					onChange={(e) =>
+						props.setColor((e.target as unknown as { value: string }).value)
+					}
+					title={`Choose ${props.name} color`}
+					data-coloris
+				/>
+			</div>
 		</div>
 	);
 }
