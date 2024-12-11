@@ -32,7 +32,7 @@ function Link(props: { href: string; label: string }) {
 			class={
 				checkPath(url, props.href)
 					? "color-primary light:color-light-primary"
-					: "hover:color-primary hover:light:color-light-primary"
+					: "hover:color-primary light:hover:color-light-primary"
 			}
 		>
 			{props.label}

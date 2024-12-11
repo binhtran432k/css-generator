@@ -10,7 +10,12 @@ export function Card(
 	}>,
 ) {
 	return (
-		<section class={clsx(props.name, "bg-bg-alt light:bg-light-bg-alt shadow-sm rounded")}>
+		<section
+			class={clsx(
+				props.name,
+				"bg-bg-alt shadow-md rounded shadow-comment/40 light:bg-light-bg-alt light:shadow-light-comment/40",
+			)}
+		>
 			<div>
 				<div class="flex justify-between items-center p-4">
 					<h3 class="font-bold">{props.label}</h3>
@@ -18,7 +23,11 @@ export function Card(
 				</div>
 				{props.children}
 			</div>
-			{props.footerElem && <div>{props.footerElem}</div>}
+			{props.footerElem && (
+				<div class="border-t border-t-comment light:border-t-light-comment text-sm">
+					{props.footerElem}
+				</div>
+			)}
 		</section>
 	);
 }
