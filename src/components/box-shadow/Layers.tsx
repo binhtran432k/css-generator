@@ -1,6 +1,6 @@
 import clsx from "clsx/lite";
 import { produce } from "immer";
-import { useCallback } from "preact/compat";
+import { useCallback, useState } from "preact/compat";
 
 import { useStore } from "#src/store.js";
 import {
@@ -11,6 +11,7 @@ import {
 
 export function Layers() {
 	const [boxShadow, setBoxShadow] = useStore.boxShadow();
+	const [dragIndex, setDragIndex] = useState(0);
 
 	const setIndex = useCallback((index: number) => {
 		setBoxShadow((state) =>
@@ -28,8 +29,7 @@ export function Layers() {
 		);
 	}, []);
 
-	const deleteLayer = useCallback((index: number, e: MouseEvent) => {
-		e.stopPropagation();
+	const deleteLayer = useCallback((index: number) => {
 		setBoxShadow((state) =>
 			produce(state, (draft) => {
 				if (draft.layers.length <= 1) return;
@@ -42,6 +42,23 @@ export function Layers() {
 			}),
 		);
 	}, []);
+
+	const dragOverLayer = (index: number) => {
+		if (index === dragIndex) return;
+
+		setBoxShadow((state) =>
+			produce(state, (draft) => {
+				const tmp = draft.layers[dragIndex];
+				draft.layers[dragIndex] = draft.layers[index];
+				draft.layers[index] = tmp;
+
+				if (draft.index === dragIndex) draft.index = index;
+				else if (draft.index === index) draft.index = dragIndex;
+			}),
+		);
+
+		setDragIndex(index);
+	};
 
 	return (
 		<div class="p-4">
@@ -62,6 +79,8 @@ export function Layers() {
 							i === boxShadow.index ? undefined : setIndex.bind(null, i)
 						}
 						onDeleteHandle={deleteLayer.bind(null, i)}
+						onDragStartHandle={setDragIndex.bind(null, i)}
+						onDragOverHandle={dragOverLayer.bind(null, i)}
 					/>
 				))}
 			</div>
@@ -73,23 +92,37 @@ function Layer(props: {
 	layer: DBoxShadowLayer;
 	isIndex: boolean;
 	onClickHandle?: () => void;
-	onDeleteHandle: (e: MouseEvent) => void;
+	onDeleteHandle: () => void;
+	onDragStartHandle: () => void;
+	onDragOverHandle: () => void;
 }) {
 	return (
 		<div
 			class={clsx(
-				"flex items-center w-full p-2 filter hover:filter-brightness-90 transition gap-2",
+				"flex items-center w-full p-2 filter hover:filter-brightness-90 transition gap-1 cursor-move",
 				props.isIndex
 					? "bg-primary color-bg light:bg-light-primary light:color-light-bg"
 					: "bg-bg-alt light:bg-light-bg-alt",
 			)}
+			onDragStart={props.onDragStartHandle}
+			onDragOver={(e) => {
+				e.preventDefault();
+				props.onDragOverHandle();
+			}}
 			onClick={props.onClickHandle}
+			draggable
 		>
-			<span class="grow text-left">{getBoxShadowLayerText(props.layer)}</span>
-			<span class="i-material-symbols-edit text-xl"></span>
+			<span class="i-material-symbols-drag-indicator text-xl" />
+			<span class="grow text-left select-none">
+				{getBoxShadowLayerText(props.layer)}
+			</span>
+			<span class="i-material-symbols-edit text-xl" />
 			<button
 				class="i-material-symbols-delete text-xl hover:scale-110 transition"
-				onClick={props.onDeleteHandle}
+				onClick={(e) => {
+					e.stopPropagation();
+					props.onDeleteHandle();
+				}}
 				aria-label="Delete"
 			/>
 		</div>
