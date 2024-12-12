@@ -1,6 +1,7 @@
 import { CssCode } from "#src/components/box-shadow/CssCode.js";
 import { Generator } from "#src/components/box-shadow/Generator.js";
 import { Preview } from "#src/components/box-shadow/Preview.js";
+import { Template } from "#src/components/box-shadow/Template.js";
 
 export function BoxShadow() {
 	return (
@@ -12,6 +13,7 @@ export function BoxShadow() {
 				<div class="flex flex-grow-1 md:max-w-1/2 flex-col gap-4">
 					<Preview />
 					<CssCode />
+					<Template />
 				</div>
 			</div>
 		</div>

@@ -1,9 +1,10 @@
 import createStore from "teaful";
-import { getIsDarkMode } from "./utils/dark";
+
 import {
-	getDefaultBoxShadowLayer,
+	createDefaultBoxShadowLayer,
 	type DBoxShadowLayer,
-} from "./utils/boxShadow";
+} from "./utils/boxShadow.js";
+import { getIsDarkMode } from "./utils/dark.js";
 
 export type MyStore = {
 	isDark: boolean;
@@ -17,6 +18,6 @@ export const { useStore } = createStore<MyStore>({
 	isDark: getIsDarkMode(),
 	boxShadow: {
 		index: 0,
-		layers: [getDefaultBoxShadowLayer()],
+		layers: [createDefaultBoxShadowLayer()],
 	},
 });
