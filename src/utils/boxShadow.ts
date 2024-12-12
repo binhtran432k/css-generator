@@ -13,24 +13,32 @@ export type DBoxShadowLayer = {
 
 let incrementId = 0;
 
-export function getDefaultBoxShadowLayer(): DBoxShadowLayer {
-	return {
-		id: incrementId++,
+export function createDefaultBoxShadowLayer(): DBoxShadowLayer {
+	return createBoxShadowLayer({
 		rgb: [0, 0, 0],
+		opacity: 20,
 		shiftRight: 0,
 		shiftDown: 0,
-		spread: 3,
 		blur: 5,
-		opacity: 20,
+		spread: 3,
 		isInset: false,
+	});
+}
+
+export function createBoxShadowLayer(
+	props: Omit<DBoxShadowLayer, "id">,
+): DBoxShadowLayer {
+	return {
+		id: incrementId++,
+		...props,
 	};
 }
 
-export function getBoxShadowCssCode(boxShadows: DBoxShadowLayer[]) {
+export function getBoxShadowCssCode(boxShadows: Omit<DBoxShadowLayer, "id">[]) {
 	return `box-shadow: ${getBoxShadowValue(boxShadows)};`;
 }
 
-export function getBoxShadowValue(boxShadows: DBoxShadowLayer[]) {
+export function getBoxShadowValue(boxShadows: Omit<DBoxShadowLayer, "id">[]) {
 	return boxShadows
 		.map((boxShadow) => {
 			const [r, g, b] = boxShadow.rgb;

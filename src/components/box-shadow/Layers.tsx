@@ -4,9 +4,9 @@ import { useCallback } from "preact/compat";
 
 import { useStore } from "#src/store.js";
 import {
+	createDefaultBoxShadowLayer,
 	type DBoxShadowLayer,
 	getBoxShadowLayerText,
-	getDefaultBoxShadowLayer,
 } from "#src/utils/boxShadow.js";
 
 export function Layers() {
@@ -23,7 +23,7 @@ export function Layers() {
 	const addLayer = useCallback(() => {
 		setBoxShadow((state) =>
 			produce(state, (draft) => {
-				draft.layers.push(getDefaultBoxShadowLayer());
+				draft.layers.push(createDefaultBoxShadowLayer());
 			}),
 		);
 	}, []);
