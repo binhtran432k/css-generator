@@ -1,7 +1,7 @@
 import { useState } from "preact/compat";
 
 import { useStore } from "#src/store.js";
-import { getBoxShadow } from "#src/utils/boxShadow.js";
+import { getBoxShadowValue } from "#src/utils/boxShadow.js";
 
 import { Card } from "../Card.jsx";
 import { ColorPicker } from "./ColorPicker.jsx";
@@ -9,7 +9,7 @@ import { ColorPicker } from "./ColorPicker.jsx";
 export function Preview() {
 	const [color, setColor] = useState("#FFFFFD");
 	const [boxColor, setBoxColor] = useState("#3B89DD");
-	const [boxShadowState] = useStore.boxShadow();
+	const [boxShadow] = useStore.boxShadow();
 
 	return (
 		<Card
@@ -17,8 +17,18 @@ export function Preview() {
 			label="Preview"
 			actionElem={
 				<div class="flex gap-2">
-					<ColorPicker color={color} setColor={setColor} name="background" isRight />
-					<ColorPicker color={boxColor} setColor={setBoxColor} name="box" isRight />
+					<ColorPicker
+						color={color}
+						setColor={setColor}
+						name="background"
+						isRight
+					/>
+					<ColorPicker
+						color={boxColor}
+						setColor={setBoxColor}
+						name="box"
+						isRight
+					/>
 				</div>
 			}
 		>
@@ -26,7 +36,7 @@ export function Preview() {
 				<div
 					style={{
 						backgroundColor: boxColor,
-						boxShadow: getBoxShadow(boxShadowState),
+						boxShadow: getBoxShadowValue(boxShadow.layers),
 					}}
 					class="flex w-[12rem] h-[12rem] m-4 transition relative"
 				></div>

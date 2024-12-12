@@ -16,14 +16,14 @@ export function Range(props: {
 		<div class="relative">
 			<label for={id}>{props.label}</label>
 			<div class="relative py-4 peer group z-2">
-				<div class="relative h-1 w-full bg-fg/20 light:bg-light-fg/20 cursor-pointer rounded">
+				<div class="relative h-1 w-full bg-comment light:bg-light-comment cursor-pointer rounded">
 					<div
-						class="absolute h-1 bg-primary cursor-pointer rounded"
+						class="absolute h-1 bg-primary cursor-pointer rounded light:bg-light-primary"
 						style={{ width: `${percent}%` }}
 					/>
 				</div>
 				<div
-					class="absolute top-1/2 -translate-1/2 w-6 h-6 bg-fg border-2 rounded-1/2 border-fg/40 light:border-light-fg/10 cursor-grab group-hover:border-primary transition"
+					class="absolute top-1/2 -translate-1/2 w-6 h-6 bg-fg border-2 rounded-1/2 border-comment light:border-light-comment group-hover:border-primary transition light:group-hover:border-light-primary"
 					style={{
 						left: `${percent}%`,
 					}}

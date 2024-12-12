@@ -12,7 +12,7 @@ export function ColorPicker(props: {
 		<div class="relative overflow-hidden">
 			<label
 				for={id}
-				class="p-1 h-8 w-12 cursor-pointer block border rounded border-fg/40 light:border-light-fg/20"
+				class="p-1 h-8 w-12 cursor-pointer block border rounded border-comment light:border-light-comment"
 			>
 				<div class="w-full h-full" style={{ backgroundColor: props.color }} />
 			</label>
