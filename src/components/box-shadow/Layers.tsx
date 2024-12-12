@@ -5,14 +5,14 @@ import { useCallback } from "preact/compat";
 import { useStore } from "#src/store.js";
 import {
 	type DBoxShadowLayer,
-	DEFAULT_BOX_SHADOW_LAYER,
 	getBoxShadowLayerText,
+	getDefaultBoxShadowLayer,
 } from "#src/utils/boxShadow.js";
 
 export function Layers() {
 	const [boxShadow, setBoxShadow] = useStore.boxShadow();
 
-	const setLayer = useCallback((index: number) => {
+	const setIndex = useCallback((index: number) => {
 		setBoxShadow((state) =>
 			produce(state, (draft) => {
 				draft.index = index;
@@ -20,10 +20,25 @@ export function Layers() {
 		);
 	}, []);
 
-	const addBoxShadowLayer = useCallback((layer: DBoxShadowLayer) => {
+	const addLayer = useCallback(() => {
 		setBoxShadow((state) =>
 			produce(state, (draft) => {
-				draft.layers.push(layer);
+				draft.layers.push(getDefaultBoxShadowLayer());
+			}),
+		);
+	}, []);
+
+	const deleteLayer = useCallback((index: number, e: MouseEvent) => {
+		e.stopPropagation();
+		setBoxShadow((state) =>
+			produce(state, (draft) => {
+				if (draft.layers.length <= 1) return;
+				draft.layers = draft.layers
+					.slice(0, index)
+					.concat(draft.layers.slice(index + 1));
+				if (draft.index >= draft.layers.length)
+					draft.index = draft.layers.length - 1;
+				else if (index < draft.index) draft.index--;
 			}),
 		);
 	}, []);
@@ -33,16 +48,20 @@ export function Layers() {
 			<button
 				type="button"
 				class="px-3 py-1 rounded bg-bg-alt hover:filter-brightness-90 border border-comment light:bg-light-bg-alt light:border-light-comment"
-				onClick={addBoxShadowLayer.bind(null, DEFAULT_BOX_SHADOW_LAYER)}
+				onClick={addLayer}
 			>
 				Add Layer
 			</button>
 			<div class="mt-4">
 				{boxShadow.layers.map((layer, i) => (
 					<Layer
+						key={layer.id}
 						layer={layer}
 						isIndex={i === boxShadow.index}
-						onClickHandle={setLayer.bind(null, i)}
+						onClickHandle={
+							i === boxShadow.index ? undefined : setIndex.bind(null, i)
+						}
+						onDeleteHandle={deleteLayer.bind(null, i)}
 					/>
 				))}
 			</div>
@@ -53,10 +72,11 @@ export function Layers() {
 function Layer(props: {
 	layer: DBoxShadowLayer;
 	isIndex: boolean;
-	onClickHandle: () => void;
+	onClickHandle?: () => void;
+	onDeleteHandle: (e: MouseEvent) => void;
 }) {
 	return (
-		<button
+		<div
 			class={clsx(
 				"flex items-center w-full p-2 filter hover:filter-brightness-90 transition gap-2",
 				props.isIndex
@@ -66,7 +86,12 @@ function Layer(props: {
 			onClick={props.onClickHandle}
 		>
 			<span class="grow text-left">{getBoxShadowLayerText(props.layer)}</span>
-      <span class="i-material-symbols-edit text-xl"></span>
-		</button>
+			<span class="i-material-symbols-edit text-xl"></span>
+			<button
+				class="i-material-symbols-delete text-xl hover:scale-110 transition"
+				onClick={props.onDeleteHandle}
+				aria-label="Delete"
+			/>
+		</div>
 	);
 }

@@ -1,6 +1,7 @@
 import { DRgb } from "./color";
 
 export type DBoxShadowLayer = {
+	id: number;
 	rgb: DRgb;
 	shiftRight: number;
 	shiftDown: number;
@@ -10,15 +11,20 @@ export type DBoxShadowLayer = {
 	isInset: boolean;
 };
 
-export const DEFAULT_BOX_SHADOW_LAYER: Readonly<DBoxShadowLayer> = {
-	rgb: [0, 0, 0],
-	shiftRight: 0,
-	shiftDown: 0,
-	spread: 3,
-	blur: 5,
-	opacity: 20,
-	isInset: false,
-};
+let incrementId = 0;
+
+export function getDefaultBoxShadowLayer(): DBoxShadowLayer {
+	return {
+		id: incrementId++,
+		rgb: [0, 0, 0],
+		shiftRight: 0,
+		shiftDown: 0,
+		spread: 3,
+		blur: 5,
+		opacity: 20,
+		isInset: false,
+	};
+}
 
 export function getBoxShadowCssCode(boxShadows: DBoxShadowLayer[]) {
 	return `box-shadow: ${getBoxShadowValue(boxShadows)};`;
