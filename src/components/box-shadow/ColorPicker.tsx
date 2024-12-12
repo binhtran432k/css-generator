@@ -26,7 +26,7 @@ export function ColorPicker(props: {
 					type="text"
 					id={id}
 					value={props.color}
-					class="w-full h-full"
+					class="h-8 w-0"
 					onChange={(e) =>
 						props.setColor((e.target as unknown as { value: string }).value)
 					}
