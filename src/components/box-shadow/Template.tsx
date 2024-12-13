@@ -128,9 +128,10 @@ export function Template() {
 			<div class="flex flex-wrap p-4 gap-4 mt-2 mb-8">
 				{templates.map((t, i) => (
 					<button
-						class="w-12 h-12 bg-light-primary hover:border hover:border-light-comment light:bg-primary light:hover:border-comment"
+						class="w-12 h-12 bg-info hover:border hover:border-comment"
 						style={{ boxShadow: getBoxShadowValue(t) }}
 						onClick={applyTemplate.bind(null, i)}
+						aria-label={`Template ${i}`}
 					/>
 				))}
 			</div>

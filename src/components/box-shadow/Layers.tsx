@@ -11,7 +11,7 @@ import {
 
 export function Layers() {
 	const [boxShadow, setBoxShadow] = useStore.boxShadow();
-	const [dragIndex, setDragIndex] = useState(0);
+	const [dragIndex, setDragIndex] = useState<number | null>(null);
 
 	const setIndex = useCallback((index: number) => {
 		setBoxShadow((state) =>
@@ -44,7 +44,7 @@ export function Layers() {
 	}, []);
 
 	const dragOverLayer = (index: number) => {
-		if (index === dragIndex) return;
+		if (index === dragIndex || dragIndex === null) return;
 
 		setBoxShadow((state) =>
 			produce(state, (draft) => {
@@ -75,12 +75,14 @@ export function Layers() {
 						key={layer.id}
 						layer={layer}
 						isIndex={i === boxShadow.index}
+						isDrag={i == dragIndex}
 						onClickHandle={
 							i === boxShadow.index ? undefined : setIndex.bind(null, i)
 						}
 						onDeleteHandle={deleteLayer.bind(null, i)}
 						onDragStartHandle={setDragIndex.bind(null, i)}
 						onDragOverHandle={dragOverLayer.bind(null, i)}
+						onDragEndHandle={setDragIndex.bind(null, null)}
 					/>
 				))}
 			</div>
@@ -90,11 +92,13 @@ export function Layers() {
 
 function Layer(props: {
 	layer: DBoxShadowLayer;
-	isIndex: boolean;
+	isIndex?: boolean;
+	isDrag?: boolean;
 	onClickHandle?: () => void;
 	onDeleteHandle: () => void;
 	onDragStartHandle: () => void;
 	onDragOverHandle: () => void;
+	onDragEndHandle: () => void;
 }) {
 	return (
 		<div
@@ -102,13 +106,16 @@ function Layer(props: {
 				"flex items-center w-full p-2 filter hover:filter-brightness-90 transition gap-1 cursor-move",
 				props.isIndex
 					? "bg-primary color-bg light:bg-light-primary light:color-light-bg"
-					: "bg-bg-alt light:bg-light-bg-alt",
+					: props.isDrag
+						? "bg-warn color-bg"
+						: "bg-bg-alt light:bg-light-bg-alt",
 			)}
 			onDragStart={props.onDragStartHandle}
 			onDragOver={(e) => {
 				e.preventDefault();
 				props.onDragOverHandle();
 			}}
+			onDragEnd={props.onDragEndHandle}
 			onClick={props.onClickHandle}
 			draggable
 		>
@@ -118,7 +125,7 @@ function Layer(props: {
 			</span>
 			<span class="i-material-symbols-edit text-xl" />
 			<button
-				class="i-material-symbols-delete text-xl hover:scale-110 transition"
+				class="i-material-symbols-delete text-xl hover:scale-110 transition-transform"
 				onClick={(e) => {
 					e.stopPropagation();
 					props.onDeleteHandle();

@@ -8,7 +8,7 @@ export function Header() {
 	return (
 		<header class="py-5">
 			<div class="bg-bg-alt light:bg-light-bg-alt p-5">
-				<nav class="container m-auto flex items-center justify-center gap-4">
+				<nav class="container m-auto flex flex-wrap items-center justify-center gap-4">
 					<Link href={pathMap.base} label="Home" />
 					<Link href={pathMap.boxShadow} label="Box shadow" />
 					<ExternalIconLink

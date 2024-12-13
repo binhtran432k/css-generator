@@ -1,5 +1,43 @@
+:root {
+	--fg: #f8f8f2;
+	--bg: #282a36;
+	--bg-alt: #21222c;
+	--comment: #6272a4;
+	--primary: #bd93f9;
+}
+
+.light {
+	--fg: #282a36;
+	--bg: #f8f8f2;
+	--bg-alt: #fffffd;
+	--comment: #b2c2f4;
+	--primary: #8d63d9;
+}
+
 ::view-transition-old(root),
 ::view-transition-new(root) {
 	animation: none;
 	mix-blend-mode: normal;
+}
+
+::-webkit-scrollbar {
+	width: .75rem;
+}
+
+::-webkit-scrollbar-track {
+	background-color: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: var(--comment);
+	border-radius: 1rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background-color: var(--primary);
+}
+
+.clr-picker,
+input.clr-color {
+	background-color: var(--bg-alt) !important;
 }
